@@ -7,7 +7,41 @@
 <title>World Adventures Airlines</title>
 </head>
 <body>
-	<h2>Welcome to World Adventures Airlines!</h2>
-	<h3>This is a JSP response.</h3>
+
+	<div class="container">
+		<div class="title">Add a passenger</div>
+		
+			<form action="AddPassenger" method="post">
+				<fieldset>
+					<legend>Passenger details</legend>
+					<div class="inputField">
+						<label for="first-name" class="inputLabel">First name: </label>
+						<input name="first-name" type="text"></input>  
+					</div>
+					<div class="inputField">
+						<label for="last-name" class="inputLabel">Last name: </label>
+						<input name="last-name" type="text"></input>  
+					</div>
+					<div class="inputField">
+						<label for="date" class="inputLabel">Date of birth: </label>
+						<input name="date" type="text"></input>  
+					</div>
+					<div class="inputField">
+						<label for="first-name" class="inputLabel">Gender: </label>
+						<select name="gender">
+							<option value="male">Male</option>
+							<option value="female">Female</option>
+						</select>
+					</div>
+				</fieldset>
+				
+				<div class="inputField" id="submitField">
+					<input id="submitBtn" type="submit" value="Add new passenger"></input>
+				</div>
+			</form>
+		
+	
+	
+	</div>
 </body>
 </html>
