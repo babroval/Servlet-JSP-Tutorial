@@ -1,6 +1,9 @@
 package com.airline.controllers;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,8 +40,24 @@ public class AddPassenger extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		String firstName = request.getParameter("first_name");
+		String lastName = request.getParameter("last_name");
+		
+		String birthDateTemp = request.getParameter("birth-date");
+		String birthDateArr[] = birthDateTemp.split("\\/");
+		String year = birthDateArr[0];
+		String month = birthDateArr[1];
+		String day = birthDateArr[2];
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, Integer.parseInt(year));
+		calendar.set(Calendar.MONTH, Integer.parseInt(month));
+		calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
+		
+		Date birthDate = calendar.getTime();
+	
+		String gender = request.getParameter("gender");
 	}
 
 }

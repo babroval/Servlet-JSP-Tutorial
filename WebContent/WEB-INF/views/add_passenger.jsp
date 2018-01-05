@@ -25,8 +25,8 @@
 						<input name="last-name" type="text"></input>  
 					</div>
 					<div class="inputField">
-						<label for="date" class="inputLabel">Date of birth: </label>
-						<input name="date" type="text"></input>  
+						<label for="birth-date" class="inputLabel">Date of birth: </label>
+						<input name="birth-date" type="text"></input>  
 					</div>
 					<div class="inputField">
 						<label for="first-name" class="inputLabel">Gender: </label>
