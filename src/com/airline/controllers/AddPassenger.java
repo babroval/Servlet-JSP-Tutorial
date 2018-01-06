@@ -19,82 +19,89 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/AddPassenger")
 public class AddPassenger extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddPassenger() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public AddPassenger() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/add_passenger.jsp");
-	
+
 		view.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.setAttribute("errors", false);
-		
+
 		String firstName = request.getParameter("first-name");
 		System.out.println("firstName: " + firstName);
-		
-		if(firstName.length() == 0) {
+
+		if (firstName.length() == 0) {
 			System.out.println("Invalid first name");
 			request.setAttribute("errors", true);
 			request.setAttribute("firstname_error", true);
 		}
-		
+
 		String lastName = request.getParameter("last-name");
 		System.out.println("lastName: " + lastName);
-		
-		if(lastName.length() == 0) {
+
+		if (lastName.length() == 0) {
 			System.out.println("Invalid last name");
 			request.setAttribute("errors", true);
 			request.setAttribute("lastname_error", true);
 		}
-		
+
 		String birthDateString = request.getParameter("birth-date");
 		String birthDateArray[] = birthDateString.split("\\/");
-		
+
 		String pattern = "^\\d{4}\\/\\d{1,2}\\/\\d{1,2}$";
 		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(birthDateString);
-		
-		if(m.find()) {
+
+		if (m.find()) {
 			String year = birthDateArray[0];
 			String month = birthDateArray[1];
 			String day = birthDateArray[2];
-			
+
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(Calendar.YEAR, Integer.parseInt(year));
 			calendar.set(Calendar.MONTH, Integer.parseInt(month));
 			calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
-			
+
 			Date birthDate = calendar.getTime();
-			
-			System.out.println("Date of birth: " + birthDate);
-			
+
+			System.out.println("birthDate: " + birthDate);
+
 		} else {
-			System.out.println("Invalid date of birth");
+			System.out.println("Invalid birthdate");
 			request.setAttribute("errors", true);
 			request.setAttribute("date_format_error", true);
 		}
-		
-		
-	
+
 		String gender = request.getParameter("gender");
-		
 		System.out.println("Gender: " + gender);
+
+		if ((Boolean) request.getAttribute("errors")) {
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/add_passenger.jsp");
+			view.forward(request, response);
+		}
+
 	}
 
 }
