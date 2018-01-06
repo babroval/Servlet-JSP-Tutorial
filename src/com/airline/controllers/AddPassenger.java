@@ -3,6 +3,8 @@ package com.airline.controllers;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,23 +43,58 @@ public class AddPassenger extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String firstName = request.getParameter("first_name");
-		String lastName = request.getParameter("last_name");
+		request.setAttribute("errors", false);
 		
-		String birthDateTemp = request.getParameter("birth-date");
-		String birthDateArr[] = birthDateTemp.split("\\/");
-		String year = birthDateArr[0];
-		String month = birthDateArr[1];
-		String day = birthDateArr[2];
+		String firstName = request.getParameter("first-name");
+		System.out.println("firstName: " + firstName);
 		
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.YEAR, Integer.parseInt(year));
-		calendar.set(Calendar.MONTH, Integer.parseInt(month));
-		calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
+		if(firstName.length() == 0) {
+			System.out.println("Invalid first name");
+			request.setAttribute("errors", true);
+			request.setAttribute("firstname_error", true);
+		}
 		
-		Date birthDate = calendar.getTime();
+		String lastName = request.getParameter("last-name");
+		System.out.println("lastName: " + lastName);
+		
+		if(lastName.length() == 0) {
+			System.out.println("Invalid last name");
+			request.setAttribute("errors", true);
+			request.setAttribute("lastname_error", true);
+		}
+		
+		String birthDateString = request.getParameter("birth-date");
+		String birthDateArray[] = birthDateString.split("\\/");
+		
+		String pattern = "^\\d{4}\\/\\d{1,2}\\/\\d{1,2}$";
+		Pattern p = Pattern.compile(pattern);
+		Matcher m = p.matcher(birthDateString);
+		
+		if(m.find()) {
+			String year = birthDateArray[0];
+			String month = birthDateArray[1];
+			String day = birthDateArray[2];
+			
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.YEAR, Integer.parseInt(year));
+			calendar.set(Calendar.MONTH, Integer.parseInt(month));
+			calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
+			
+			Date birthDate = calendar.getTime();
+			
+			System.out.println("Date of birth: " + birthDate);
+			
+		} else {
+			System.out.println("Invalid date of birth");
+			request.setAttribute("errors", true);
+			request.setAttribute("date_format_error", true);
+		}
+		
+		
 	
 		String gender = request.getParameter("gender");
+		
+		System.out.println("Gender: " + gender);
 	}
 
 }
