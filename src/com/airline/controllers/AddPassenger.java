@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,7 +55,7 @@ public class AddPassenger extends HttpServlet {
 		request.setAttribute("errors", false);
 
 		Passenger p = new Passenger();
-		
+
 		String firstName = request.getParameter("first-name");
 		System.out.println("firstName: " + firstName);
 
@@ -97,7 +98,7 @@ public class AddPassenger extends HttpServlet {
 			Date birthDate = calendar.getTime();
 
 			System.out.println("birthDate: " + birthDate);
-			
+
 			p.setBirth(birthDate);
 
 		} else {
@@ -109,14 +110,15 @@ public class AddPassenger extends HttpServlet {
 		String gender = request.getParameter("gender");
 		System.out.println("Gender: " + gender);
 		p.setGender(Gender.valueOf(gender));
-		
+
 		if ((Boolean) request.getAttribute("errors")) {
 			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/add_passenger.jsp");
 			view.forward(request, response);
 		} else {
-			ArrayList<Passenger> passengers = new ArrayList<>();
+			ServletContext sc = this.getServletContext();
+			ArrayList<Passenger> passengers = (ArrayList<Passenger>) sc.getAttribute("passengers");
 			passengers.add(p);
-			
+			sc.setAttribute("passengers", passengers);
 			response.sendRedirect("");
 		}
 
