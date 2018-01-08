@@ -21,17 +21,29 @@
 			<fieldset id="error_fieldset">
 				<legend align="center">Errors</legend>
 				<ul>
-				<% if(request.getAttribute("firstname_error") != null) { %>
+					<%
+						if (request.getAttribute("firstname_error") != null) {
+					%>
 					<li class="error">Invalid First name</li>
-				<% } %>
-				
-				<% if(request.getAttribute("lastname_error") != null) { %>
+					<%
+						}
+					%>
+
+					<%
+						if (request.getAttribute("lastname_error") != null) {
+					%>
 					<li class="error">Invalid Last name</li>
-				<% } %>
-				
-				<% if(request.getAttribute("date_format_error") != null) { %>
+					<%
+						}
+					%>
+
+					<%
+						if (request.getAttribute("date_format_error") != null) {
+					%>
 					<li class="error">Invalid Birthdate</li>
-				<% } %>
+					<%
+						}
+					%>
 				</ul>
 			</fieldset>
 		</form>
@@ -44,20 +56,20 @@
 			<fieldset>
 				<legend>Passenger details</legend>
 				<div class="inputField">
-					<label for="first-name" class="inputLabel">First name: </label> <input
-						name="first-name" type="text"></input>
+					<label for="first-name" class="inputLabel">First name: </label> 
+					<input name="first-name" type="text" value="<%= request.getAttribute("first-name") %>"></input>
 				</div>
 				<div class="inputField">
-					<label for="last-name" class="inputLabel">Last name: </label> <input
-						name="last-name" type="text"></input>
+					<label for="last-name" class="inputLabel">Last name: </label> 
+					<input name="last-name" type="text" value="<%= request.getAttribute("last-name") %>"></input>
 				</div>
 				<div class="inputField">
-					<label for="birth-date" class="inputLabel">Birthdate: </label>
-					<input name="birth-date" type="text"></input>
+					<label for="birth-date" class="inputLabel">Birthdate: </label> 
+					<input name="birth-date" type="text" value="<%= request.getAttribute("birth-date") %>"></input>
 				</div>
 				<div class="inputField">
-					<label for="first-name" class="inputLabel">Gender: </label> <select
-						name="gender">
+					<label for="first-name" class="inputLabel">Gender: </label> 
+					<select name="gender">
 						<option value="Male">Male</option>
 						<option value="Female">Female</option>
 					</select>
@@ -68,9 +80,6 @@
 				<input id="submitBtn" type="submit" value="Add new passenger"></input>
 			</div>
 		</form>
-
-
-
 	</div>
 </body>
 </html>

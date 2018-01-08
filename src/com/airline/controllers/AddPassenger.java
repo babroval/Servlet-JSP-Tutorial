@@ -40,6 +40,10 @@ public class AddPassenger extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		request.setAttribute("first-name", "");
+		request.setAttribute("last-name", "");
+		request.setAttribute("birth-date", "");
+		
 		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/add_passenger.jsp");
 
 		view.forward(request, response);
@@ -63,8 +67,10 @@ public class AddPassenger extends HttpServlet {
 			System.out.println("Invalid first name");
 			request.setAttribute("errors", true);
 			request.setAttribute("firstname_error", true);
+			request.setAttribute("first-name", "");
 		} else {
 			p.setFirstName(firstName);
+			request.setAttribute("first-name", firstName);
 		}
 
 		String lastName = request.getParameter("last-name");
@@ -74,8 +80,10 @@ public class AddPassenger extends HttpServlet {
 			System.out.println("Invalid last name");
 			request.setAttribute("errors", true);
 			request.setAttribute("lastname_error", true);
+			request.setAttribute("last-name", "");
 		} else {
 			p.setLastName(lastName);
+			request.setAttribute("last-name", lastName);
 		}
 
 		String birthDateString = request.getParameter("birth-date");
@@ -100,11 +108,16 @@ public class AddPassenger extends HttpServlet {
 			System.out.println("birthDate: " + birthDate);
 
 			p.setBirth(birthDate);
+			request.setAttribute("birth-date", birthDateString);
 
 		} else {
 			System.out.println("Invalid birthdate");
 			request.setAttribute("errors", true);
 			request.setAttribute("date_format_error", true);
+			request.setAttribute("birth-date", "");
+			if (birthDateString.length() == 0) {
+				request.setAttribute("birth-date", "");
+			}
 		}
 
 		String gender = request.getParameter("gender");
@@ -116,9 +129,12 @@ public class AddPassenger extends HttpServlet {
 			view.forward(request, response);
 		} else {
 			ServletContext sc = this.getServletContext();
-			ArrayList<Passenger> passengers = (ArrayList<Passenger>) sc.getAttribute("passengers");
-			passengers.add(p);
-			sc.setAttribute("passengers", passengers);
+			synchronized (this) {
+				ArrayList<Passenger> passengers = (ArrayList<Passenger>) sc.getAttribute("passengers");
+				passengers.add(p);
+				sc.setAttribute("passengers", passengers);
+			}
+			
 			response.sendRedirect("");
 		}
 
