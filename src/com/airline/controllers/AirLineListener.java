@@ -27,21 +27,21 @@ public class AirLineListener implements ServletContextListener {
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent event)  { 
-         ServletContext sc = event.getServletContext();
-         ArrayList<Passenger> passengers = (ArrayList<Passenger>) sc.getAttribute("passengers");
          
-         if(passengers == null) {
-        	 System.out.println("No passenger list created yet. Let's create the list here...");
-        	 passengers = new ArrayList<>();
-        	 sc.setAttribute("passengers", passengers);
-         }
     }
 
 	/**
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
-    public void contextInitialized(ServletContextEvent arg0)  { 
-         // TODO Auto-generated method stub
+    public void contextInitialized(ServletContextEvent event)  { 
+    	ServletContext sc = event.getServletContext();
+        ArrayList<Passenger> passengers = (ArrayList<Passenger>) sc.getAttribute("passengers");
+        
+        if(passengers == null) {
+       	 System.out.println("No passenger list created yet. Let's create the list here...");
+       	 passengers = new ArrayList<>();
+       	 sc.setAttribute("passengers", passengers);
+        }
     }
 	
 }
