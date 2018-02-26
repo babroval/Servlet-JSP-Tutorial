@@ -52,7 +52,7 @@
 			}
 		%>
 
-		<form action="AddPassenger" method="post">
+		<form action="" method="post">
 			<fieldset>
 				<legend>Passenger details</legend>
 				<div class="inputField">
