@@ -16,7 +16,7 @@ import com.airline.models.Passenger;
 /**
  * Servlet implementation class MainPage
  */
-@WebServlet("")
+@WebServlet("/MainPage")
 public class MainPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

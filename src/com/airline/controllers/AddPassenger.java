@@ -21,7 +21,7 @@ import com.airline.models.Passenger;
 /**
  * Servlet implementation class AddPassenger
  */
-@WebServlet("/AddPassenger")
+@WebServlet("")
 public class AddPassenger extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -135,7 +135,7 @@ public class AddPassenger extends HttpServlet {
 				sc.setAttribute("passengers", passengers);
 			}
 			
-			response.sendRedirect("");
+			response.sendRedirect("MainPage");
 		}
 
 	}
